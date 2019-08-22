@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-data-backup
+  namespace: postgres
+spec:
+  containers:
+    - name: data-backup:latest
+      image: schickling/postgres-backup-s3
+      args: ["sh", "run.sh"]
+      envFrom:
+        - configMapRef:
+            name: postgres-data-backup-secret
+  restartPolicy: Never
